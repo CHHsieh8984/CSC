@@ -1,0 +1,52 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+int pad_l=0;
+int pad_r=1;
+int pad_t=0;
+int pad_b=1;
+int str_x=2;
+int str_y=2;
+int in_x=6;
+int in_y=6;
+int in_c=2;
+int out_x=3;
+int out_y=3;
+int out_c=2;
+int wet_x=3;
+int wet_y=3;
+int wet_c=2;
+bool isCorrect = false;
+std::vector<std::string> outseq; 
+
+int main()
+{
+    int totalW = pad_l + pad_r + in_x;
+    int totalH = pad_t + pad_b + in_y;
+    if(out_x == ((totalW - wet_x)/str_x + 1) && out_y == ((totalH - wet_y)/str_y + 1) && in_c == out_c && in_c == wet_c){
+        std::cout << "Correct" << std::endl;
+        isCorrect = true;
+    }
+    else std::cout << "Wrong Setting" << std::endl;
+    if(isCorrect){
+        for(int wc_iter=0;wc_iter<in_c;wc_iter++){
+            for(int wy_iter=0;wy_iter<wet_y;wy_iter++){
+                for(int wx_iter=0;wx_iter<wet_x;wx_iter++){
+                    std::string tmp("Width:" + std::to_string(wx_iter) + ", Height:" + std::to_string(wy_iter) + ", Channel:" + std::to_string(wc_iter) + "; ");
+                    for(int iy_iter=0;iy_iter<out_y;iy_iter++){
+                        for(int ix_iter=0;ix_iter<out_x;ix_iter++){
+                            tmp += std::to_string(wc_iter*totalW*totalH + (wy_iter+iy_iter*str_y)*totalW + wx_iter + ix_iter*str_x);
+                            if(iy_iter !=out_x-1 || ix_iter != out_y-1) tmp += ", ";
+                        }
+                    }
+                    outseq.push_back(tmp);
+                }
+            }
+        }
+        //std::cout << outseq[17] << std::endl;
+    }
+
+   
+   return 0;
+}
